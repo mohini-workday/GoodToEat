@@ -147,10 +147,18 @@ st.markdown("""
     }
     
     /* Navigation button styles - consistent sizing */
+    /* Force equal column widths */
+    div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: auto !important;
+    }
+    
     div[data-testid="column"] {
         width: 100% !important;
         min-width: 0 !important;
-        flex: 1 1 0 !important;
+        flex: 1 1 0% !important;
         padding: 0 0.25rem !important;
         max-width: 100% !important;
     }
