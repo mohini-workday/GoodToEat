@@ -1,4 +1,6 @@
 import streamlit as st
+from PIL import Image
+import os
 
 # Page configuration
 st.set_page_config(
@@ -8,268 +10,807 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for styling
+# Custom CSS for modern, elegant styling inspired by reference sites
 st.markdown("""
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap');
+    
+    .main {
+        font-family: 'Lato', sans-serif;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+        color: #2C3E2D;
+    }
+    
     .main-header {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #D4A574;
+        text-align: center;
+        padding: 2rem 0 1rem 0;
+        margin-bottom: 0.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .tagline {
+        font-family: 'Lato', sans-serif;
+        font-size: 1.2rem;
+        color: #6B7A5F;
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-section {
+        background: linear-gradient(135deg, #F8F6F0 0%, #E8E5DC 100%);
+        padding: 4rem 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-family: 'Playfair Display', serif;
         font-size: 3rem;
-        font-weight: bold;
-        color: #2E7D32;
-        text-align: center;
-        padding: 1rem 0;
-        margin-bottom: 2rem;
+        color: #2C3E2D;
+        margin-bottom: 1rem;
+        font-weight: 700;
     }
-    .sub-header {
-        font-size: 1.5rem;
-        color: #4CAF50;
-        text-align: center;
-        margin-bottom: 2rem;
+    
+    .hero-subtitle {
+        font-family: 'Lato', sans-serif;
+        font-size: 1.3rem;
+        color: #6B7A5F;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
     }
-    .product-card {
-        background-color: #F5F5F5;
+    
+    .section-box {
+        background-color: #FFFFFF;
+        padding: 2.5rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        border-top: 4px solid #D4A574;
+    }
+    
+    .feature-card {
+        background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 100%);
         padding: 2rem;
         border-radius: 10px;
         margin: 1rem 0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        transition: transform 0.3s ease;
+        border-left: 3px solid #D4A574;
     }
-    .feature-box {
-        background-color: #E8F5E9;
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    
+    .product-card {
+        background-color: #FFFFFF;
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border: 1px solid #E8E5DC;
+    }
+    
+    .testimonial-box {
+        background: linear-gradient(135deg, #F8F6F0 0%, #E8E5DC 100%);
+        padding: 2rem;
+        border-radius: 10px;
+        margin: 1.5rem 0;
+        border-left: 5px solid #D4A574;
+        font-style: italic;
+    }
+    
+    .blog-card {
+        background-color: #FFFFFF;
         padding: 1.5rem;
-        border-radius: 8px;
+        border-radius: 10px;
         margin: 1rem 0;
-        border-left: 4px solid #4CAF50;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        border-top: 3px solid #D4A574;
     }
+    
     .stButton>button {
-        background-color: #4CAF50;
+        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%);
         color: white;
-        border-radius: 5px;
-        padding: 0.5rem 2rem;
-        font-weight: bold;
+        border-radius: 25px;
+        padding: 0.75rem 2.5rem;
+        font-weight: 600;
+        font-family: 'Lato', sans-serif;
+        border: none;
+        transition: all 0.3s ease;
     }
+    
     .stButton>button:hover {
-        background-color: #45a049;
+        background: linear-gradient(135deg, #B8935F 0%, #9A7A4A 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(212, 165, 116, 0.4);
+    }
+    
+    .nav-link {
+        color: #2C3E2D;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+        background-color: #F8F6F0;
+    }
+    
+    .footer {
+        background-color: #2C3E2D;
+        color: #F8F6F0;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 4rem;
+        border-radius: 10px 10px 0 0;
+    }
+    
+    .award-badge {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        color: #2C3E2D;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-block;
+        margin: 0.5rem;
+    }
+    
+    .highlight-text {
+        color: #D4A574;
+        font-weight: 600;
     }
     </style>
 """, unsafe_allow_html=True)
 
+# Helper function to load images
+def load_image(image_path):
+    try:
+        if os.path.exists(image_path):
+            return Image.open(image_path)
+        return None
+    except Exception as e:
+        st.error(f"Error loading image: {e}")
+        return None
+
 # Navigation
-st.markdown('<div class="main-header">🧈 GoodToEat</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">GoodToEat</div>', unsafe_allow_html=True)
+st.markdown('<div class="tagline">Handcrafted Irish Ghee • Made with Love in Small Batches</div>', unsafe_allow_html=True)
 
 # Sidebar navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Products", "About", "Contact Us"])
+st.sidebar.markdown("### 🧈 Navigation")
+page = st.sidebar.radio(
+    "Choose a page",
+    ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"],
+    label_visibility="collapsed"
+)
 
 # Home Page
 if page == "Home":
-    st.markdown('<div class="sub-header">Handcrafted Irish Ghee, Made with Love</div>', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        st.image("https://images.unsplash.com/photo-1618164436266-44628842d3f2?w=600", 
-                 caption="Handcrafted Irish Ghee", use_container_width=True)
-    
-    with col2:
-        st.markdown("""
-        <div class="feature-box">
-        <h3>Welcome to GoodToEat</h3>
-        <p>We specialize in creating premium, handcrafted ghee using the finest Irish dairy products. 
-        Each batch is carefully made in small quantities to ensure the highest quality and freshness.</p>
+    # Hero Section
+    st.markdown("""
+    <div class="hero-section">
+        <div class="hero-title">The Golden Touch of Home</div>
+        <div class="hero-subtitle">
+            A little home business with a lot of warmth. Everything we do is personal. 
+            The ghee is handcrafted in small batches, the orders are packed with care, 
+            and the conversations are real. From our holistic kitchen to yours.
         </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        ### Why Choose Our Ghee?
-        - ✅ Made from 100% Irish dairy products
-        - ✅ Handcrafted in small batches
-        - ✅ Freshly made in Ireland
-        - ✅ Premium quality guaranteed
-        - ✅ Traditional methods, modern standards
-        """)
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Main Image
+    ghee_img = load_image("Images/Ghee.png")
+    if ghee_img:
+        st.image(ghee_img, use_container_width=True, caption="Premium Handcrafted Irish Ghee")
     
     st.markdown("---")
     
-    col3, col4, col5 = st.columns(3)
+    # Key Features
+    st.markdown("### ✨ Why GoodToEat?")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        <div class="feature-card">
+        <h4>🇮🇪 Irish Heritage</h4>
+        <p>Proudly handcrafted in Ireland using the finest locally sourced Irish dairy products. 
+        Each batch celebrates our rich dairy heritage.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="feature-card">
+        <h4>👨‍🍳 Small Batch Crafted</h4>
+        <p>Made fresh in small quantities to ensure the highest quality and freshness. 
+        Every jar receives personal attention and care.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
-        <div class="feature-box">
-        <h4>🌿 Natural & Pure</h4>
-        <p>No additives, preservatives, or artificial ingredients. Just pure, natural ghee.</p>
+        <div class="feature-card">
+        <h4>🌿 Pure & Natural</h4>
+        <p>No additives, preservatives, or artificial ingredients. Just pure, natural ghee 
+        made with traditional methods and modern standards.</p>
         </div>
         """, unsafe_allow_html=True)
     
-    with col4:
-        st.markdown("""
-        <div class="feature-box">
-        <h4>🇮🇪 Irish Heritage</h4>
-        <p>Proudly made in Ireland using locally sourced Irish dairy products.</p>
-        </div>
-        """, unsafe_allow_html=True)
+    st.markdown("---")
     
-    with col5:
-        st.markdown("""
-        <div class="feature-box">
-        <h4>👨‍🍳 Small Batch</h4>
-        <p>Handcrafted in small quantities to ensure freshness and quality in every jar.</p>
-        </div>
-        """, unsafe_allow_html=True)
+    # Why GTE Section
+    why_gte_img = load_image("Images/WhyGTE.png")
+    if why_gte_img:
+        col1, col2 = st.columns([1, 1])
+        with col1:
+            st.image(why_gte_img, use_container_width=True)
+        with col2:
+            st.markdown("""
+            <div class="section-box">
+            <h3>Our Essential Identity</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Laboratory Tested</strong> - Every batch is tested for quality and purity</li>
+                <li><strong>Award Winning Products</strong> - Recognized for excellence in taste and quality</li>
+                <li><strong>Artisan-Made With Love & Care</strong> - Handcrafted with passion</li>
+                <li><strong>Certified Organic and Grass-Fed</strong> - Premium ingredients only</li>
+                <li><strong>Gut Health Benefits</strong> - Supporting your wellness journey</li>
+                <li><strong>Sterilised Glass Jars</strong> - Preserving freshness and quality</li>
+            </ul>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Taste the Difference
+    taste_img = load_image("Images/TasteTheDifference.png")
+    if taste_img:
+        st.image(taste_img, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # Use Cases
+    st.markdown("### 🍳 Use Ghee Anywhere You Would Use Butter or Oil!")
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    uses = [
+        ("Cook", "👨‍🍳"),
+        ("Sauté", "🍳"),
+        ("Spread", "🍞"),
+        ("Sear", "🔥"),
+        ("Bake", "🧁")
+    ]
+    
+    for i, (use, icon) in enumerate(uses):
+        with [col1, col2, col3, col4, col5][i]:
+            st.markdown(f"""
+            <div style="text-align: center; padding: 1rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">{icon}</div>
+                <div style="font-weight: 600; color: #2C3E2D;">{use}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # Products Page
 elif page == "Products":
-    st.markdown('<div class="sub-header">Our Products</div>', unsafe_allow_html=True)
+    st.markdown("### 🧈 Our Products")
+    st.markdown('<p style="text-align: center; color: #6B7A5F; font-size: 1.1rem;">Handcrafted in small batches, GoodToEat brings pure warmth and refined depth of flavor to your meals.</p>', unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Product 1 - 200g
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        product_200g = load_image("Images/200G_Mockup.png")
+        if product_200g:
+            st.image(product_200g, use_container_width=True)
+    with col2:
+        st.markdown("""
+        <div class="product-card">
+        <h3>Premium Irish Ghee - 200g</h3>
+        <p><strong class="highlight-text">Price:</strong> €14.99</p>
+        <p><strong>Size:</strong> 200g Glass Jar</p>
+        <p>Perfect for trying our premium ghee or as a thoughtful gift. Made from 100% Irish butter, 
+        handcrafted in small batches with traditional methods.</p>
+        <h4>Key Features:</h4>
+        <ul>
+            <li>Made from 100% Irish butter</li>
+            <li>Handcrafted in small quantities</li>
+            <li>Freshly made in Ireland</li>
+            <li>No additives or preservatives</li>
+            <li>Rich, nutty flavor</li>
+            <li>Lactose-free and casein-free</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        quantity_200g = st.number_input("Quantity (200g)", min_value=0, max_value=10, value=0, key="qty_200g")
+        if st.button("Add to Cart", key="add_200g"):
+            if quantity_200g > 0:
+                st.success(f"Added {quantity_200g} x 200g jar(s) to cart!")
+                st.balloons()
+    
+    st.markdown("---")
+    
+    # Product 2 - 500ml
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        st.markdown("""
+        <div class="product-card">
+        <h3>Premium Irish Ghee - 500ml</h3>
+        <p><strong class="highlight-text">Price:</strong> €24.99</p>
+        <p><strong>Size:</strong> 500ml Glass Jar</p>
+        <p>Our most popular size! Ideal for regular use in your kitchen. This premium ghee is carefully 
+        crafted using traditional methods, ensuring a rich, buttery flavor that enhances any dish.</p>
+        <h4>Key Features:</h4>
+        <ul>
+            <li>Made from 100% Irish butter</li>
+            <li>Handcrafted in small quantities</li>
+            <li>Freshly made in Ireland</li>
+            <li>No additives or preservatives</li>
+            <li>High smoke point - perfect for cooking</li>
+            <li>Lactose-free and casein-free</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        quantity_500ml = st.number_input("Quantity (500ml)", min_value=0, max_value=10, value=0, key="qty_500ml")
+        if st.button("Add to Cart", key="add_500ml"):
+            if quantity_500ml > 0:
+                st.success(f"Added {quantity_500ml} x 500ml jar(s) to cart!")
+                st.balloons()
+    with col2:
+        product_500ml = load_image("Images/500ml_V4.png")
+        if product_500ml:
+            st.image(product_500ml, use_container_width=True)
+    
+    st.markdown("---")
+    
+    # Product 3 - 1KG
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        product_1kg = load_image("Images/1KG_V3_Mockup_2.png")
+        if product_1kg:
+            st.image(product_1kg, use_container_width=True)
+    with col2:
+        st.markdown("""
+        <div class="product-card">
+        <h3>Premium Irish Ghee - 1KG</h3>
+        <p><strong class="highlight-text">Price:</strong> €44.99</p>
+        <p><strong>Size:</strong> 1KG Glass Jar</p>
+        <p>Our largest size, perfect for families or those who love to cook with ghee regularly. 
+        Best value for money while maintaining the same premium quality.</p>
+        <h4>Key Features:</h4>
+        <ul>
+            <li>Made from 100% Irish butter</li>
+            <li>Handcrafted in small quantities</li>
+            <li>Freshly made in Ireland</li>
+            <li>No additives or preservatives</li>
+            <li>Rich, nutty flavor</li>
+            <li>Long shelf life - no refrigeration needed</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        quantity_1kg = st.number_input("Quantity (1KG)", min_value=0, max_value=10, value=0, key="qty_1kg")
+        if st.button("Add to Cart", key="add_1kg"):
+            if quantity_1kg > 0:
+                st.success(f"Added {quantity_1kg} x 1KG jar(s) to cart!")
+                st.balloons()
+    
+    st.markdown("---")
+    
+    # Nutritional Information
+    st.markdown("### 📊 Nutritional Information (per 100g)")
+    st.markdown("""
+    <div class="section-box">
+    <ul style="line-height: 2;">
+        <li><strong>Energy:</strong> 900 kcal</li>
+        <li><strong>Fat:</strong> 100g (of which saturated: 65g)</li>
+        <li><strong>Carbohydrates:</strong> 0g</li>
+        <li><strong>Protein:</strong> 0g</li>
+        <li><strong>Salt:</strong> 0g</li>
+    </ul>
+    <p><strong>Storage:</strong> Store in a cool, dry place. No refrigeration required. 
+    Best consumed within 12 months of production.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# The Founder Page
+elif page == "The Founder":
+    st.markdown("### 👤 The Founder")
+    
+    # Founder Image
+    founder_img1 = load_image("Images/Gemini_Generated_Image_ja0t4mja0t4mja0t.png")
+    founder_img2 = load_image("Images/Gemini_Generated_Image_xpzlvsxpzlvsxpzl.png")
+    
+    col1, col2 = st.columns([1, 1])
+    if founder_img1:
+        with col1:
+            st.image(founder_img1, use_container_width=True)
+    if founder_img2:
+        with col2:
+            st.image(founder_img2, use_container_width=True)
     
     st.markdown("""
-    <div class="product-card">
-    <h2>🧈 Premium Irish Ghee</h2>
-    <p><strong>Price:</strong> €24.99</p>
-    <p><strong>Size:</strong> 500g Jar</p>
-    <p><strong>Description:</strong></p>
-    <p>Our signature handcrafted ghee is made fresh in small batches using the finest Irish dairy products. 
-    This premium ghee is carefully crafted using traditional methods, ensuring a rich, buttery flavor 
-    that enhances any dish. Perfect for cooking, baking, or simply spreading on your favorite bread.</p>
+    <div class="section-box">
+    <h3>A Little Home Business with a Lot of Warmth</h3>
+    <p style="line-height: 1.8; font-size: 1.1rem;">
+    We're a small home-based business, and that's something we're proud of. Everything we do is personal. 
+    The ghee is handcrafted in small batches, the orders are packed with care, and the conversations are real.
+    </p>
+    <p style="line-height: 1.8; font-size: 1.1rem;">
+    If you ever need help, have a question, or just want to share your experience, reach out anytime. 
+    You won't be speaking to a system. You'll be speaking to me, the founder of GoodToEat.
+    </p>
+    <p style="line-height: 1.8; font-size: 1.1rem;">
+    We love connecting with people, and we're always here to make sure you feel looked after. 
+    From our holistic kitchen to yours, we're committed to bringing you the finest handcrafted ghee 
+    made with love and care.
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    <h4>Key Features:</h4>
-    <ul>
-        <li>Made from 100% Irish butter</li>
-        <li>Handcrafted in small quantities</li>
-        <li>Freshly made in Ireland</li>
-        <li>No additives or preservatives</li>
-        <li>Rich, nutty flavor</li>
-        <li>High smoke point - perfect for cooking</li>
-        <li>Lactose-free and casein-free</li>
-    </ul>
+    st.markdown("""
+    <div class="feature-card">
+    <h4>Our Story</h4>
+    <p>GoodToEat was born from a passion for quality, tradition, and the rich dairy heritage of Ireland. 
+    What started as a small home kitchen experiment has grown into a beloved business that brings 
+    authentic, handcrafted ghee to families across Ireland and beyond.</p>
+    <p>Every jar tells a story of dedication, care, and the belief that the best food comes from 
+    the best ingredients, prepared with attention to detail and a whole lot of heart.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# The Brand Page
+elif page == "The Brand":
+    st.markdown("### 🏷️ The Brand")
     
-    <h4>Storage:</h4>
-    <p>Store in a cool, dry place. No refrigeration required. Best consumed within 12 months of production.</p>
-    
-    <h4>Nutritional Information (per 100g):</h4>
-    <ul>
-        <li>Energy: 900 kcal</li>
-        <li>Fat: 100g (of which saturated: 65g)</li>
-        <li>Carbohydrates: 0g</li>
-        <li>Protein: 0g</li>
-        <li>Salt: 0g</li>
-    </ul>
+    st.markdown("""
+    <div class="hero-section">
+        <div class="hero-title">GoodToEat</div>
+        <div class="hero-subtitle">
+            More than just ghee. We're a brand built on authenticity, quality, and the belief 
+            that food should nourish both body and soul.
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("---")
     
-    # Product ordering section
-    st.subheader("Order Now")
+    # Brand Values
     col1, col2 = st.columns(2)
     
     with col1:
-        quantity = st.number_input("Quantity", min_value=1, max_value=10, value=1, step=1)
-        total_price = quantity * 24.99
+        st.markdown("""
+        <div class="feature-card">
+        <h4>🌿 Our Mission</h4>
+        <p>To bring you the finest handcrafted ghee, made fresh in small batches using premium 
+        Irish dairy products. We are committed to quality, authenticity, and the traditional 
+        methods that make our ghee special.</p>
+        </div>
         
-    with col2:
-        st.metric("Total Price", f"€{total_price:.2f}")
+        <div class="feature-card">
+        <h4>🇮🇪 Irish Heritage</h4>
+        <p>Proudly made in Ireland using locally sourced Irish dairy products. We support 
+        local dairy farmers and preserve traditional methods while maintaining modern quality standards.</p>
+        </div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    if st.button("Add to Cart", type="primary"):
-        st.success(f"Added {quantity} jar(s) to cart! Total: €{total_price:.2f}")
-        st.balloons()
+    with col2:
+        st.markdown("""
+        <div class="feature-card">
+        <h4>👨‍🍳 Small Batch Production</h4>
+        <p>Handcrafted in small quantities to ensure freshness and quality. Every jar receives 
+        personal attention and care, preserving the traditional handcrafted methods.</p>
+        </div>
+        
+        <div class="feature-card">
+        <h4>💚 Sustainability</h4>
+        <p>We believe in environmentally conscious practices, supporting sustainable dairy farming, 
+        and using eco-friendly packaging where possible. Our commitment extends beyond the product 
+        to the planet we share.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Brand Identity
+    st.markdown("### Our Essential Identity")
+    st.markdown("""
+    <div class="section-box">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem;">
+        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧪</div>
+            <div style="font-weight: 600;">Laboratory Tested</div>
+        </div>
+        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏆</div>
+            <div style="font-weight: 600;">Award Winning</div>
+        </div>
+        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">❤️</div>
+            <div style="font-weight: 600;">Made With Love</div>
+        </div>
+        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
+            <div style="font-weight: 600;">Certified Organic</div>
+        </div>
+        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💚</div>
+            <div style="font-weight: 600;">Gut Health Benefits</div>
+        </div>
+        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🫙</div>
+            <div style="font-weight: 600;">Sterilised Glass Jars</div>
+        </div>
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# About Page
-elif page == "About":
-    st.markdown('<div class="sub-header">About GoodToEat</div>', unsafe_allow_html=True)
+# About Ghee Page
+elif page == "About Ghee":
+    st.markdown("### 🧈 About Ghee")
+    
+    about_img = load_image("Images/About.png")
+    if about_img:
+        st.image(about_img, use_container_width=True)
+    
+    st.markdown("---")
     
     st.markdown("""
-    <div class="feature-box">
-    <h3>Our Story</h3>
-    <p>GoodToEat was born from a passion for quality, tradition, and the rich dairy heritage of Ireland. 
-    We believe that the best food comes from the best ingredients, prepared with care and attention to detail.</p>
+    <div class="section-box">
+    <h3>What is Ghee?</h3>
+    <p style="line-height: 1.8; font-size: 1.1rem;">
+    Ghee is a form of clarified butter that has been used in traditional cooking for thousands of years. 
+    It's made by slowly simmering butter to remove water and milk solids, leaving behind pure, golden, 
+    nutrient-rich fat with a rich, nutty flavor.
+    </p>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("### Our Mission")
-    st.markdown("""
-    To bring you the finest handcrafted ghee, made fresh in small batches using premium Irish dairy products. 
-    We are committed to quality, authenticity, and the traditional methods that make our ghee special.
-    """)
-    
-    st.markdown("### Our Values")
-    
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
-        **🌿 Quality First**
-        - We use only the finest Irish dairy products
-        - Every batch is carefully crafted and tested
-        - No shortcuts, no compromises
-        
-        **🇮🇪 Irish Heritage**
-        - Proudly made in Ireland
-        - Supporting local dairy farmers
-        - Preserving traditional methods
-        """)
+        <div class="feature-card">
+        <h4>✨ Health Benefits</h4>
+        <ul style="line-height: 2;">
+            <li><strong>Rich in Vitamins:</strong> Contains vitamins A, D, E, and K</li>
+            <li><strong>Gut Health:</strong> Contains butyric acid that supports digestive health</li>
+            <li><strong>Lactose-Free:</strong> Safe for those with lactose intolerance</li>
+            <li><strong>High Smoke Point:</strong> Ideal for high-heat cooking</li>
+            <li><strong>Antioxidants:</strong> Contains antioxidants that support overall wellness</li>
+            <li><strong>Anti-Inflammatory:</strong> May help reduce inflammation</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        **👨‍🍳 Small Batch Production**
-        - Handcrafted in small quantities
-        - Ensures freshness and quality
-        - Attention to detail in every jar
-        
-        **💚 Sustainability**
-        - Environmentally conscious practices
-        - Supporting sustainable dairy farming
-        - Eco-friendly packaging where possible
-        """)
+        <div class="feature-card">
+        <h4>🍳 Culinary Uses</h4>
+        <ul style="line-height: 2;">
+            <li><strong>Cooking:</strong> Perfect for sautéing, frying, and roasting</li>
+            <li><strong>Baking:</strong> Adds rich flavor to baked goods</li>
+            <li><strong>Spreading:</strong> Delicious on toast, bread, or crackers</li>
+            <li><strong>Flavor Enhancer:</strong> Adds depth to any dish</li>
+            <li><strong>Traditional Recipes:</strong> Essential in many cultural cuisines</li>
+            <li><strong>Coffee:</strong> Popular in bulletproof coffee recipes</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
     
-    st.markdown("### Our Process")
-    st.markdown("""
-    1. **Sourcing**: We carefully select the finest Irish butter from trusted local suppliers
-    2. **Preparation**: Using traditional methods, we slowly clarify the butter
-    3. **Crafting**: Each batch is handcrafted with attention to detail
-    4. **Quality Control**: Every jar is tested to ensure it meets our high standards
-    5. **Packaging**: Freshly packaged and ready for you to enjoy
-    """)
+    st.markdown("---")
     
-    st.markdown("### Why Small Batches?")
     st.markdown("""
-    We believe that quality comes from care and attention. By producing in small batches, we can:
-    - Ensure freshness in every jar
-    - Maintain consistent quality
-    - Give each batch the attention it deserves
-    - Preserve the traditional handcrafted methods
-    """)
+    <div class="section-box">
+    <h3>Why Choose GoodToEat Ghee?</h3>
+    <p style="line-height: 1.8; font-size: 1.1rem;">
+    Our ghee is handcrafted using traditional methods passed down through generations, combined with 
+    modern quality standards. Made from 100% Irish butter, each batch is carefully crafted in small 
+    quantities to ensure the highest quality and freshness.
+    </p>
+    <p style="line-height: 1.8; font-size: 1.1rem;">
+    Unlike mass-produced alternatives, our ghee maintains its authentic flavor and nutritional benefits, 
+    making it a premium choice for health-conscious consumers and culinary enthusiasts alike.
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    ghee_food_img = load_image("Images/GheeFood.png")
+    if ghee_food_img:
+        st.image(ghee_food_img, use_container_width=True)
 
-# Contact Us Page
-elif page == "Contact Us":
-    st.markdown('<div class="sub-header">Get in Touch</div>', unsafe_allow_html=True)
+# Ghee Moments Page
+elif page == "Ghee Moments":
+    st.markdown("### 📸 Ghee Moments")
+    st.markdown('<p style="text-align: center; color: #6B7A5F; font-size: 1.1rem;">Celebrating the joy of cooking with GoodToEat Ghee</p>', unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Customer Testimonials
+    st.markdown("### 💬 What Our Customers Say")
+    
+    testimonials = [
+        {
+            "name": "Sarah M.",
+            "text": "The best ghee I've ever tasted! The flavor is incredible and it's made such a difference in my cooking. You can really taste the quality.",
+            "rating": "⭐⭐⭐⭐⭐"
+        },
+        {
+            "name": "Michael D.",
+            "text": "As someone who's lactose intolerant, finding high-quality ghee was a game-changer. GoodToEat ghee is now a staple in my kitchen!",
+            "rating": "⭐⭐⭐⭐⭐"
+        },
+        {
+            "name": "Emma K.",
+            "text": "I love that it's made in small batches in Ireland. You can tell the care and attention that goes into every jar. Highly recommend!",
+            "rating": "⭐⭐⭐⭐⭐"
+        },
+        {
+            "name": "James L.",
+            "text": "The 1KG jar is perfect for our family. We use it for everything - cooking, baking, even in our morning coffee. Excellent quality!",
+            "rating": "⭐⭐⭐⭐⭐"
+        }
+    ]
+    
+    col1, col2 = st.columns(2)
+    for i, testimonial in enumerate(testimonials):
+        with [col1, col2][i % 2]:
+            st.markdown(f"""
+            <div class="testimonial-box">
+            <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">{testimonial['rating']}</div>
+            <p style="font-size: 1.05rem; margin-bottom: 1rem;">"{testimonial['text']}"</p>
+            <div style="font-weight: 600; color: #D4A574;">— {testimonial['name']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Recipe Ideas
+    st.markdown("### 🍳 Recipe Ideas")
+    
+    recipes = [
+        {
+            "title": "Golden Roasted Vegetables",
+            "description": "Toss your favorite vegetables in GoodToEat ghee before roasting for a rich, golden finish."
+        },
+        {
+            "title": "Ghee-Fried Eggs",
+            "description": "Start your day with eggs fried in ghee - the perfect way to add flavor and nutrition."
+        },
+        {
+            "title": "Homemade Popcorn",
+            "description": "Drizzle melted ghee over freshly popped popcorn for a delicious, healthy snack."
+        },
+        {
+            "title": "Ghee Rice",
+            "description": "Add a spoonful of ghee to your rice for an aromatic, flavorful side dish."
+        }
+    ]
+    
+    for recipe in recipes:
+        st.markdown(f"""
+        <div class="blog-card">
+        <h4>{recipe['title']}</h4>
+        <p>{recipe['description']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Ghee Blogs Page
+elif page == "Ghee Blogs":
+    st.markdown("### 📝 Ghee Blogs")
+    
+    blog_img = load_image("Images/Blog.png")
+    if blog_img:
+        st.image(blog_img, use_container_width=True)
+    
+    st.markdown("---")
+    
+    blogs = [
+        {
+            "title": "The History and Tradition of Ghee",
+            "date": "January 15, 2024",
+            "excerpt": "Discover the rich history of ghee, from ancient Ayurvedic practices to modern culinary uses. Learn how this golden elixir has been cherished for thousands of years.",
+            "read_time": "5 min read"
+        },
+        {
+            "title": "Health Benefits of Ghee: A Comprehensive Guide",
+            "date": "January 10, 2024",
+            "excerpt": "Explore the numerous health benefits of ghee, from supporting gut health to providing essential vitamins. Understand why ghee is considered a superfood in many cultures.",
+            "read_time": "7 min read"
+        },
+        {
+            "title": "Cooking with Ghee: Tips and Techniques",
+            "date": "January 5, 2024",
+            "excerpt": "Master the art of cooking with ghee. Learn about its high smoke point, flavor profile, and discover new ways to incorporate this versatile ingredient into your meals.",
+            "read_time": "6 min read"
+        },
+        {
+            "title": "Why Small Batch Production Matters",
+            "date": "December 28, 2023",
+            "excerpt": "At GoodToEat, we believe in the power of small batch production. Learn how this approach ensures quality, freshness, and maintains the authentic flavor of our ghee.",
+            "read_time": "4 min read"
+        },
+        {
+            "title": "Irish Dairy: The Foundation of Quality Ghee",
+            "date": "December 20, 2023",
+            "excerpt": "Discover why Irish dairy products are among the finest in the world and how they contribute to the exceptional quality of GoodToEat ghee.",
+            "read_time": "5 min read"
+        }
+    ]
+    
+    for blog in blogs:
+        st.markdown(f"""
+        <div class="blog-card">
+        <h3>{blog['title']}</h3>
+        <p style="color: #6B7A5F; font-size: 0.9rem; margin-bottom: 1rem;">
+            <span style="color: #D4A574;">📅</span> {blog['date']} • <span style="color: #D4A574;">⏱️</span> {blog['read_time']}
+        </p>
+        <p style="line-height: 1.8; font-size: 1.05rem;">{blog['excerpt']}</p>
+        <button style="background: #D4A574; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 5px; margin-top: 1rem; cursor: pointer;">
+            Read More →
+        </button>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Contacts Page
+elif page == "Contacts":
+    st.markdown("### 📞 Contact Us")
+    st.markdown('<p style="text-align: center; color: #6B7A5F; font-size: 1.1rem;">We\'d love to hear from you! Get in touch anytime.</p>', unsafe_allow_html=True)
+    
+    st.markdown("---")
     
     col1, col2 = st.columns([1, 1])
     
     with col1:
         st.markdown("""
-        <div class="feature-box">
+        <div class="section-box">
         <h3>Contact Information</h3>
-        <p><strong>📍 Address:</strong><br>
+        <p style="line-height: 2.5; font-size: 1.1rem;">
+        <strong>📍 Address:</strong><br>
         GoodToEat<br>
-        Ireland</p>
+        Ireland<br><br>
         
-        <p><strong>📧 Email:</strong><br>
-        info@goodtoeat.ie</p>
+        <strong>📧 Email:</strong><br>
+        <a href="mailto:info@goodtoeat.ie" style="color: #D4A574;">info@goodtoeat.ie</a><br><br>
         
-        <p><strong>📞 Phone:</strong><br>
-        +353 (0) 1 XXX XXXX</p>
+        <strong>📞 Phone:</strong><br>
+        +353 (0) 1 XXX XXXX<br><br>
         
-        <p><strong>🕒 Business Hours:</strong><br>
+        <strong>🕒 Business Hours:</strong><br>
         Monday - Friday: 9:00 AM - 5:00 PM<br>
         Saturday: 10:00 AM - 2:00 PM<br>
-        Sunday: Closed</p>
+        Sunday: Closed
+        </p>
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("### Follow Us")
         st.markdown("""
-        - Facebook: @GoodToEatIreland
-        - Instagram: @goodtoeat_ie
-        - Twitter: @GoodToEatIE
-        """)
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <div style="padding: 1rem; background: #F8F6F0; border-radius: 8px; text-align: center; flex: 1;">
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📘</div>
+                <div style="font-weight: 600;">Facebook</div>
+                <div style="font-size: 0.9rem; color: #6B7A5F;">@GoodToEatIreland</div>
+            </div>
+            <div style="padding: 1rem; background: #F8F6F0; border-radius: 8px; text-align: center; flex: 1;">
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📷</div>
+                <div style="font-weight: 600;">Instagram</div>
+                <div style="font-size: 0.9rem; color: #6B7A5F;">@goodtoeat_ie</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("### Send us a Message")
@@ -294,7 +835,6 @@ elif page == "Contact Us":
                     st.success("Thank you for your message! We'll get back to you soon.")
                     st.balloons()
                     
-                    # Display submitted information (in a real app, this would be sent to a backend)
                     st.info(f"""
                     **Message Sent Successfully!**
                     
@@ -307,11 +847,82 @@ elif page == "Contact Us":
                 else:
                     st.error("Please fill in all required fields (marked with *)")
 
+# FAQs Page
+elif page == "FAQs":
+    st.markdown("### ❓ Frequently Asked Questions")
+    
+    faq_img = load_image("Images/Ghee_FAQ.png")
+    if faq_img:
+        st.image(faq_img, use_container_width=True)
+    
+    st.markdown("---")
+    
+    faqs = [
+        {
+            "question": "What is ghee?",
+            "answer": "Ghee is a form of clarified butter that has been used in traditional cooking for thousands of years. It's made by slowly simmering butter to remove water and milk solids, leaving behind pure, golden, nutrient-rich fat with a rich, nutty flavor."
+        },
+        {
+            "question": "Is ghee lactose-free?",
+            "answer": "Yes! During the clarification process, the milk solids (which contain lactose) are removed, making ghee safe for those with lactose intolerance. However, if you have a severe dairy allergy, please consult with your healthcare provider."
+        },
+        {
+            "question": "How should I store ghee?",
+            "answer": "Ghee should be stored in a cool, dry place away from direct sunlight. No refrigeration is required. It will remain solid at room temperature and can last for up to 12 months when stored properly."
+        },
+        {
+            "question": "What makes GoodToEat ghee different?",
+            "answer": "Our ghee is handcrafted in small batches using 100% Irish dairy products. We use traditional methods combined with modern quality standards, ensuring each jar is fresh, pure, and of the highest quality. Every batch is personally crafted with care and attention to detail."
+        },
+        {
+            "question": "Can I use ghee for high-heat cooking?",
+            "answer": "Absolutely! Ghee has a high smoke point (around 485°F/250°C), making it perfect for sautéing, frying, roasting, and other high-heat cooking methods. It won't burn or smoke like regular butter."
+        },
+        {
+            "question": "What sizes do you offer?",
+            "answer": "We currently offer three sizes: 200g (perfect for trying), 500ml (our most popular size), and 1KG (best value for families or regular users). All come in sterilized glass jars."
+        },
+        {
+            "question": "Do you ship internationally?",
+            "answer": "Currently, we primarily ship within Ireland. For international shipping inquiries, please contact us directly at info@goodtoeat.ie and we'll do our best to accommodate your request."
+        },
+        {
+            "question": "Is your ghee organic?",
+            "answer": "We use premium Irish dairy products from trusted local suppliers. While we prioritize quality and sustainability, please check individual product listings for specific organic certifications."
+        },
+        {
+            "question": "How long does shipping take?",
+            "answer": "Standard shipping within Ireland typically takes 2-3 business days. We also offer express shipping options. You'll receive a tracking number once your order ships."
+        },
+        {
+            "question": "What is your return policy?",
+            "answer": "We stand behind the quality of every jar. If you're not completely satisfied with your purchase, please contact us within 30 days for a full refund. No questions asked."
+        }
+    ]
+    
+    for i, faq in enumerate(faqs):
+        with st.expander(f"**{faq['question']}**", expanded=False):
+            st.markdown(f"<p style='line-height: 1.8; font-size: 1.05rem;'>{faq['answer']}</p>", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.markdown("""
+    <div class="section-box" style="text-align: center;">
+    <h4>Still have questions?</h4>
+    <p>Don't hesitate to reach out! We're here to help.</p>
+    <p><strong>Email:</strong> <a href="mailto:info@goodtoeat.ie" style="color: #D4A574;">info@goodtoeat.ie</a></p>
+    </div>
+    """, unsafe_allow_html=True)
+
 # Footer
 st.markdown("---")
 st.markdown("""
-<div style='text-align: center; color: #666; padding: 2rem 0;'>
-<p>© 2024 GoodToEat. All rights reserved. | Handcrafted in Ireland 🇮🇪</p>
+<div class="footer">
+<p style="margin: 0.5rem 0;">© 2024 GoodToEat. All rights reserved.</p>
+<p style="margin: 0.5rem 0;">Handcrafted in Ireland 🇮🇪 | Made with Love & Care</p>
+<p style="margin: 0.5rem 0; font-size: 0.9rem;">
+    <a href="#" style="color: #D4A574; margin: 0 1rem;">Privacy Policy</a> | 
+    <a href="#" style="color: #D4A574; margin: 0 1rem;">Terms of Service</a> | 
+    <a href="#" style="color: #D4A574; margin: 0 1rem;">Shipping Policy</a>
+</p>
 </div>
 """, unsafe_allow_html=True)
-
