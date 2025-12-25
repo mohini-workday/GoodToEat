@@ -4,10 +4,15 @@ An interactive website for GoodToEat company showcasing premium handcrafted Iris
 
 ## Features
 
-- **Home Page**: Welcome page with company overview and key features
-- **Products Page**: Detailed product information with ordering functionality
-- **About Page**: Company story, mission, values, and process
-- **Contact Us Page**: Contact information and interactive contact form
+- **Home Page**: Hero section with company overview, key features, and product highlights
+- **Products Page**: Three product sizes (200g, 500ml, 1KG) with detailed information and ordering functionality
+- **The Founder Page**: Personal story and background of the founder
+- **The Brand Page**: Mission, values, and brand identity
+- **About Ghee Page**: Comprehensive information about ghee, health benefits, and culinary uses
+- **Ghee Moments Page**: Customer testimonials and recipe ideas
+- **Ghee Blogs Page**: Blog posts and articles about ghee
+- **Contacts Page**: Contact information and interactive contact form
+- **FAQs Page**: Frequently asked questions with expandable answers
 
 ## Installation
 
@@ -50,7 +55,14 @@ The app will open in your default web browser at `http://localhost:8501`
 GoodToEat/
 ├── app.py              # Main Streamlit application
 ├── requirements.txt    # Python dependencies
-└── README.md          # Project documentation
+├── README.md          # Project documentation
+├── Images/            # Product and content images
+│   ├── 200G_Mockup.png
+│   ├── 500ml_V4.png
+│   ├── 1KG_V3_Mockup_2.png
+│   └── ... (other images)
+└── .streamlit/        # Streamlit configuration
+    └── config.toml
 ```
 
 ## Technologies Used
