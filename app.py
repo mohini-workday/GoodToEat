@@ -2,13 +2,6 @@ import streamlit as st
 from PIL import Image
 import os
 
-# Page configuration
-st.set_page_config(
-    page_title="GoodToEat - Handcrafted Irish Ghee",
-    page_icon="🧈",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
 
 # Hide sidebar completely
 st.markdown("""
@@ -343,6 +336,14 @@ def load_image(image_path):
     except Exception as e:
         st.error(f"Error loading image: {e}")
         return None
+
+# Page configuration
+st.set_page_config(
+    page_title="GoodToEat - Handcrafted Irish Ghee",
+    page_icon="🧈",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
 # Initialize session state for page navigation
 if 'current_page' not in st.session_state:
