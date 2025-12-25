@@ -26,6 +26,12 @@ wheels/
 # Streamlit
 .streamlit/secrets.toml
 
+# SSL Certificates
+ssl/
+*.crt
+*.key
+*.pem
+
 # IDE
 .vscode/
 .idea/
