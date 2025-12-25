@@ -249,6 +249,20 @@ st.markdown("""
         padding: 0 2rem;
     }
     
+    /* Logo styling */
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .logo-container img {
+        max-height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+    
     .nav-links {
         display: flex;
         gap: 0.5rem;
@@ -315,12 +329,20 @@ pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Mom
 st.markdown("""
     <div class="top-nav">
         <div class="nav-container">
-            <div style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574; margin-bottom: 1rem;">
-                🧈 GoodToEat
-            </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
+
+# Display logo image
+logo_img = load_image("Images/Logo G2E-01.jpg")
+if logo_img:
+    # Center the logo with proper sizing
+    col1, col2, col3 = st.columns([1, 3, 1])
+    with col2:
+        st.image(logo_img, use_container_width=False, width=200)
+else:
+    # Fallback to text if image not found
+    st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574; text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
 # Navigation buttons in a row - all same size
 nav_cols = st.columns(len(pages), gap="small")
