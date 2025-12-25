@@ -268,18 +268,40 @@ st.markdown("""
         padding: 0 2rem;
     }
     
-    /* Logo styling */
-    .logo-container {
+    /* Logo styling - centered for all screen sizes */
+    .logo-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 1rem;
+        width: 100%;
+        margin: 1rem 0;
+        padding: 0;
+        text-align: center;
     }
     
-    .logo-container img {
-        max-height: 80px;
+    /* Center Streamlit image within logo wrapper */
+    .logo-wrapper > div {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    
+    .logo-wrapper img {
+        max-height: 120px;
         width: auto;
+        height: auto;
         object-fit: contain;
+        display: block;
+        margin: 0 auto !important;
+    }
+    
+    /* Ensure logo container is centered */
+    div[data-testid="stImage"] {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 auto !important;
     }
     
     .nav-links {
@@ -356,20 +378,20 @@ pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Mom
 st.markdown("""
     <div class="top-nav">
         <div class="nav-container">
+            <div class="logo-wrapper">
 """, unsafe_allow_html=True)
 
 # Display logo image centered at the top
 logo_img = load_image("Images/Logo G2E-01.jpg")
 if logo_img:
-    # Center the logo with proper sizing
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.image(logo_img, use_container_width=False, width=200)
+    # Center the logo - Streamlit will place it in the wrapper div
+    st.image(logo_img, use_container_width=False, width=200)
 else:
     # Fallback to text if image not found
     st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574; text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
 st.markdown("""
+            </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
