@@ -10,6 +10,15 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Hide sidebar completely
+st.markdown("""
+    <style>
+        section[data-testid="stSidebar"] {
+            display: none;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Custom CSS for modern, elegant styling inspired by reference sites
 st.markdown("""
     <style>
@@ -137,6 +146,36 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(212, 165, 116, 0.4);
     }
     
+    /* Navigation button styles */
+    div[data-testid="column"] button {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    /* Active navigation button */
+    div[data-testid="column"] button[kind="primary"] {
+        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%);
+        color: white;
+        font-weight: 600;
+    }
+    
+    /* Inactive navigation button */
+    div[data-testid="column"] button[kind="secondary"] {
+        background: transparent;
+        color: #2C3E2D;
+        border: 1px solid #E8E5DC;
+    }
+    
+    div[data-testid="column"] button[kind="secondary"]:hover {
+        background-color: #F8F6F0;
+        border-color: #D4A574;
+        color: #D4A574;
+    }
+    
     .nav-link {
         color: #2C3E2D;
         text-decoration: none;
@@ -172,6 +211,70 @@ st.markdown("""
         color: #D4A574;
         font-weight: 600;
     }
+    
+    /* Top Navigation Bar */
+    .top-nav {
+        background-color: #FFFFFF;
+        padding: 0;
+        margin: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        margin-bottom: 2rem;
+    }
+    
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .nav-item {
+        padding: 0.75rem 1.25rem;
+        color: #2C3E2D;
+        text-decoration: none;
+        font-family: 'Lato', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+    }
+    
+    .nav-item:hover {
+        background-color: #F8F6F0;
+        color: #D4A574;
+    }
+    
+    .nav-item.active {
+        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%);
+        color: white;
+        font-weight: 600;
+    }
+    
+    /* Hide Streamlit default elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Adjust main content padding */
+    .main .block-container {
+        padding-top: 2rem;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -185,17 +288,39 @@ def load_image(image_path):
         st.error(f"Error loading image: {e}")
         return None
 
-# Navigation
+# Initialize session state for page navigation
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = "Home"
+
+# Navigation pages
+pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
+
+# Create top navigation bar
+st.markdown("""
+    <div class="top-nav">
+        <div class="nav-container">
+            <div style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574;">
+                🧈 GoodToEat
+            </div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+
+# Navigation buttons in a row below the logo
+nav_cols = st.columns(len(pages))
+for i, page_name in enumerate(pages):
+    with nav_cols[i]:
+        button_type = "primary" if st.session_state.current_page == page_name else "secondary"
+        if st.button(page_name, key=f"nav_{page_name}", use_container_width=True, type=button_type):
+            st.session_state.current_page = page_name
+            st.rerun()
+
+# Get current page
+page = st.session_state.current_page
+
+# Header below navigation
 st.markdown('<div class="main-header">GoodToEat</div>', unsafe_allow_html=True)
 st.markdown('<div class="tagline">Handcrafted Irish Ghee • Made with Love in Small Batches</div>', unsafe_allow_html=True)
-
-# Sidebar navigation
-st.sidebar.markdown("### 🧈 Navigation")
-page = st.sidebar.radio(
-    "Choose a page",
-    ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"],
-    label_visibility="collapsed"
-)
 
 # Home Page
 if page == "Home":
