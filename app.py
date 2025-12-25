@@ -146,34 +146,51 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(212, 165, 116, 0.4);
     }
     
-    /* Navigation button styles */
+    /* Navigation button styles - consistent sizing */
     div[data-testid="column"] button {
-        width: 100%;
-        font-size: 0.9rem;
-        padding: 0.6rem 0.8rem;
+        width: 100% !important;
+        min-width: 100% !important;
+        height: 45px !important;
+        min-height: 45px !important;
+        max-height: 45px !important;
+        font-size: 0.85rem !important;
+        padding: 0.5rem 0.3rem !important;
         border-radius: 5px;
         font-weight: 500;
         transition: all 0.3s ease;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Ensure columns have equal width */
+    div[data-testid="column"] {
+        width: 100% !important;
+        min-width: 0 !important;
     }
     
     /* Active navigation button */
     div[data-testid="column"] button[kind="primary"] {
-        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%);
-        color: white;
-        font-weight: 600;
+        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%) !important;
+        color: white !important;
+        font-weight: 600 !important;
     }
     
     /* Inactive navigation button */
     div[data-testid="column"] button[kind="secondary"] {
-        background: transparent;
-        color: #2C3E2D;
-        border: 1px solid #E8E5DC;
+        background: transparent !important;
+        color: #2C3E2D !important;
+        border: 1px solid #E8E5DC !important;
     }
     
     div[data-testid="column"] button[kind="secondary"]:hover {
-        background-color: #F8F6F0;
-        border-color: #D4A574;
-        color: #D4A574;
+        background-color: #F8F6F0 !important;
+        border-color: #D4A574 !important;
+        color: #D4A574 !important;
     }
     
     .nav-link {
@@ -215,22 +232,21 @@ st.markdown("""
     /* Top Navigation Bar */
     .top-nav {
         background-color: #FFFFFF;
-        padding: 0;
-        margin: 0;
+        padding: 1rem 0;
+        margin: 0 0 1rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         position: sticky;
         top: 0;
         z-index: 1000;
-        margin-bottom: 2rem;
     }
     
     .nav-container {
         max-width: 1200px;
         margin: 0 auto;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        padding: 1rem 2rem;
+        padding: 0 2rem;
     }
     
     .nav-links {
@@ -295,19 +311,19 @@ if 'current_page' not in st.session_state:
 # Navigation pages
 pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
 
-# Create top navigation bar
+# Create top navigation bar with logo and navigation
 st.markdown("""
     <div class="top-nav">
         <div class="nav-container">
-            <div style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574;">
+            <div style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574; margin-bottom: 1rem;">
                 🧈 GoodToEat
             </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Navigation buttons in a row below the logo
-nav_cols = st.columns(len(pages))
+# Navigation buttons in a row - all same size
+nav_cols = st.columns(len(pages), gap="small")
 for i, page_name in enumerate(pages):
     with nav_cols[i]:
         button_type = "primary" if st.session_state.current_page == page_name else "secondary"
