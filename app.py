@@ -152,6 +152,7 @@ st.markdown("""
         min-width: 0 !important;
         flex: 1 1 0 !important;
         padding: 0 0.25rem !important;
+        max-width: 100% !important;
     }
     
     div[data-testid="column"] button {
@@ -161,8 +162,8 @@ st.markdown("""
         height: 50px !important;
         min-height: 50px !important;
         max-height: 50px !important;
-        font-size: 0.8rem !important;
-        padding: 0.5rem 0.25rem !important;
+        font-size: 0.75rem !important;
+        padding: 0.4rem 0.2rem !important;
         margin: 0 !important;
         border-radius: 5px;
         font-weight: 500;
@@ -173,8 +174,21 @@ st.markdown("""
         text-align: center !important;
         white-space: normal !important;
         word-wrap: break-word !important;
-        line-height: 1.2 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.15 !important;
         box-sizing: border-box !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Ensure button text wraps properly for long names */
+    div[data-testid="column"] button p {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 0.75rem !important;
+        line-height: 1.15 !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
     }
     
     /* Active navigation button */
