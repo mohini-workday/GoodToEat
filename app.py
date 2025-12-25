@@ -147,14 +147,23 @@ st.markdown("""
     }
     
     /* Navigation button styles - consistent sizing */
+    div[data-testid="column"] {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex: 1 1 0 !important;
+        padding: 0 0.25rem !important;
+    }
+    
     div[data-testid="column"] button {
         width: 100% !important;
-        min-width: 100% !important;
-        height: 45px !important;
-        min-height: 45px !important;
-        max-height: 45px !important;
-        font-size: 0.85rem !important;
-        padding: 0.5rem 0.3rem !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        max-height: 50px !important;
+        font-size: 0.8rem !important;
+        padding: 0.5rem 0.25rem !important;
+        margin: 0 !important;
         border-radius: 5px;
         font-weight: 500;
         transition: all 0.3s ease;
@@ -165,12 +174,7 @@ st.markdown("""
         white-space: normal !important;
         word-wrap: break-word !important;
         line-height: 1.2 !important;
-    }
-    
-    /* Ensure columns have equal width */
-    div[data-testid="column"] {
-        width: 100% !important;
-        min-width: 0 !important;
+        box-sizing: border-box !important;
     }
     
     /* Active navigation button */
@@ -232,7 +236,7 @@ st.markdown("""
     /* Top Navigation Bar */
     .top-nav {
         background-color: #FFFFFF;
-        padding: 1rem 0;
+        padding: 1.5rem 0 1rem 0;
         margin: 0 0 1rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         position: sticky;
@@ -329,22 +333,26 @@ pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Mom
 st.markdown("""
     <div class="top-nav">
         <div class="nav-container">
-        </div>
-    </div>
 """, unsafe_allow_html=True)
 
-# Display logo image
+# Display logo image centered at the top
 logo_img = load_image("Images/Logo G2E-01.jpg")
 if logo_img:
     # Center the logo with proper sizing
-    col1, col2, col3 = st.columns([1, 3, 1])
+    col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.image(logo_img, use_container_width=False, width=200)
 else:
     # Fallback to text if image not found
     st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574; text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
-# Navigation buttons in a row - all same size
+st.markdown("""
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+
+# Navigation buttons in a row - all same size with consistent spacing
+st.markdown('<div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">', unsafe_allow_html=True)
 nav_cols = st.columns(len(pages), gap="small")
 for i, page_name in enumerate(pages):
     with nav_cols[i]:
@@ -352,13 +360,10 @@ for i, page_name in enumerate(pages):
         if st.button(page_name, key=f"nav_{page_name}", use_container_width=True, type=button_type):
             st.session_state.current_page = page_name
             st.rerun()
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Get current page
 page = st.session_state.current_page
-
-# Header below navigation
-st.markdown('<div class="main-header">GoodToEat</div>', unsafe_allow_html=True)
-st.markdown('<div class="tagline">Handcrafted Irish Ghee • Made with Love in Small Batches</div>', unsafe_allow_html=True)
 
 # Home Page
 if page == "Home":
