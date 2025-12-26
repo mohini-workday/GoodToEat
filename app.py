@@ -1242,9 +1242,9 @@ st.markdown("""
 <p style="margin: 0.5rem 0;">© 2024 GoodToEat. All rights reserved.</p>
 <p style="margin: 0.5rem 0;">Handcrafted in Ireland 🇮🇪 | Made with Love & Care</p>
 <p style="margin: 0.5rem 0; font-size: 0.9rem;">
-    <a href="#" style="color: var(--accent-light); margin: 0 1rem;">Privacy Policy</a> | 
-    <a href="#" style="color: var(--accent-light); margin: 0 1rem;">Terms of Service</a> | 
-    <a href="#" style="color: var(--accent-light); margin: 0 1rem;">Shipping Policy</a>
+    <a href="#" style="margin: 0 1rem;">Privacy Policy</a> | 
+    <a href="#" style="margin: 0 1rem;">Terms of Service</a> | 
+    <a href="#" style="margin: 0 1rem;">Shipping Policy</a>
 </p>
 </div>
 """, unsafe_allow_html=True)
