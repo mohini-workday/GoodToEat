@@ -502,20 +502,18 @@ pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Mom
 
 # Display logo image centered at the top
 st.markdown("""
- 
-            <div class="logo-wrapper">
 """, unsafe_allow_html=True)
 
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
     # Center the logo - doubled size from 200 to 400
-    st.image(logo_img, use_container_width=False, width=400)
+    st.image(logo_img, use_container_width=False, width=400, class_name="logo-wrapper")
 else:
     # Fallback to text if image not found
     st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
 st.markdown("""
-            </div>
+          
 """, unsafe_allow_html=True)
 
 st.markdown("""
