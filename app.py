@@ -516,11 +516,6 @@ st.markdown("""
           
 """, unsafe_allow_html=True)
 
-st.markdown("""
-            </div>
-        </div>
-    </div>
-""", unsafe_allow_html=True)
 
 # Navigation buttons in a row - all same size with consistent spacing
 st.markdown('<div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">', unsafe_allow_html=True)
