@@ -502,8 +502,7 @@ pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Mom
 
 # Display logo image centered at the top
 st.markdown("""
-    <div class="top-nav">
-        <div class="nav-container">
+ 
             <div class="logo-wrapper">
 """, unsafe_allow_html=True)
 
@@ -517,8 +516,6 @@ else:
 
 st.markdown("""
             </div>
-        </div>
-    </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
