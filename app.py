@@ -513,9 +513,6 @@ else:
     with col2:
         st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
-st.markdown("""
-          
-""", unsafe_allow_html=True)
 
 
 # Navigation buttons in a row - all same size with consistent spacing
