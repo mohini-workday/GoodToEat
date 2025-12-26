@@ -367,6 +367,23 @@ st.markdown("""
     .main .block-container {
         padding-top: 2rem;
     }
+    
+    /* Set full website background and default text color */
+    .stApp {
+        background-color: var(--bg);
+        color: var(--text);
+    }
+    
+    /* Ensure body and main content use the color variables */
+    body {
+        background-color: var(--bg);
+        color: var(--text);
+    }
+    
+    .main {
+        background-color: var(--bg);
+        color: var(--text);
+    }
     </style>
 """, unsafe_allow_html=True)
 
