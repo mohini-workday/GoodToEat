@@ -42,8 +42,15 @@ st.markdown("""
         font-family: 'Lato', sans-serif;
     }
     
+    /* Headings - bold and modern using primary color */
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Playfair Display', serif;
+        color: var(--primary);
+        font-weight: 700;
+    }
+    
+    /* Body text stays neutral */
+    p, li, span {
         color: var(--text);
     }
     
