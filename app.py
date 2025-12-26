@@ -19,9 +19,13 @@ st.markdown("""
             color: var(--secondary);
         }
         
-        /* Hide sidebar by default since navigation is at top */
-        section[data-testid="stSidebar"] {
-            display: none;
+        /* Selected/active items in sidebar */
+        section[data-testid="stSidebar"] [data-baseweb="menu"] [aria-selected="true"],
+        section[data-testid="stSidebar"] .stRadio label[data-testid="stRadio"]:has(input:checked),
+        section[data-testid="stSidebar"] button:focus,
+        section[data-testid="stSidebar"] a:focus {
+            background-color: var(--secondary);
+            color: #2B2B2B;
         }
     </style>
 """, unsafe_allow_html=True)
