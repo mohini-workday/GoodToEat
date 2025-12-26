@@ -123,13 +123,23 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
     
-    .product-card {
-        background-color: var(--bg-light);
-        padding: 2rem;
+    /* Product Cards - white background, subtle shadow, bronze accent border */
+    .card {
+        background-color: white;
+        border-left: 4px solid var(--accent);
+        padding: 1.5rem;
         border-radius: 12px;
-        margin: 1.5rem 0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        border: 1px solid var(--bg-dark);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        margin-bottom: 1.5rem;
+    }
+    
+    .product-card {
+        background-color: white;
+        border-left: 4px solid var(--accent);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        margin-bottom: 1.5rem;
     }
     
     .testimonial-box {
