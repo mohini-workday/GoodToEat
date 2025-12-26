@@ -19,11 +19,13 @@ st.markdown("""
             color: var(--secondary);
         }
         
-        /* Selected/active items in sidebar */
+        /* Selected/active items in sidebar - peach highlight */
         section[data-testid="stSidebar"] [data-baseweb="menu"] [aria-selected="true"],
         section[data-testid="stSidebar"] .stRadio label[data-testid="stRadio"]:has(input:checked),
         section[data-testid="stSidebar"] button:focus,
-        section[data-testid="stSidebar"] a:focus {
+        section[data-testid="stSidebar"] a:focus,
+        section[data-testid="stSidebar"] [class*="selected"],
+        section[data-testid="stSidebar"] [class*="active"] {
             background-color: var(--secondary);
             color: #2B2B2B;
         }
