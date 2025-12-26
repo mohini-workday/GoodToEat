@@ -285,13 +285,23 @@ st.markdown("""
         background-color: var(--bg);
     }
     
+    /* Dark footer using Cobalt Teal with bronze links */
     .footer {
-        background-color: var(--text);
-        color: var(--bg);
+        background-color: var(--primary);
         padding: 2rem;
+        color: white;
         text-align: center;
         margin-top: 4rem;
-        border-radius: 10px 10px 0 0;
+    }
+    
+    .footer a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+    
+    .footer a:hover {
+        color: var(--accent-light);
+        text-decoration: underline;
     }
     
     .award-badge {
