@@ -450,9 +450,26 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Adjust main content padding */
+    /* Adjust main content padding - minimal top spacing */
     .main .block-container {
-        padding-top: 2rem;
+        padding-top: 0.1rem;
+    }
+    
+    /* Remove Streamlit default header spacing */
+    header[data-testid="stHeader"] {
+        display: none;
+    }
+    
+    /* Reduce spacing at the very top */
+    .stApp > div:first-child {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Remove top margin from logo container */
+    div[data-testid="column"]:has(img) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
     
     /* Set full website background and default text color */
@@ -500,13 +517,14 @@ if 'current_page' not in st.session_state:
 pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
 
 
-# Display logo image centered at the top - double size and centered
+# Display logo image centered at the top - double size and centered, minimal top spacing
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
     # Center the logo using columns for proper centering, double size (400px)
+    # Minimal top spacing
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.image(logo_img, use_container_width=False, width=400)
+        st.image(logo_img, use_container_width=False, width=400, output_format="PNG")
 else:
     # Fallback to text if image not found
     col1, col2, col3 = st.columns([1, 2, 1])
