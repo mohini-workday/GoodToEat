@@ -483,15 +483,9 @@ if 'current_page' not in st.session_state:
 # Navigation pages
 pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
 
-# Create top navigation bar with logo and navigation
-st.markdown("""
-    <div class="top-nav">
-        <div class="nav-container">
-            <div class="logo-wrapper">
-""", unsafe_allow_html=True)
 
 # Display logo image centered at the top
-logo_img = load_image("Images/Logo G2E-01.jpg")
+logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
     # Center the logo - Streamlit will place it in the wrapper div
     st.image(logo_img, use_container_width=False, width=200)
