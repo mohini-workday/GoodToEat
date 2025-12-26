@@ -3,9 +3,23 @@ from PIL import Image
 import os
 
 
-# Hide sidebar completely
+# Style sidebar with primary color and peach highlights
 st.markdown("""
     <style>
+        /* Sidebar styling - primary color with peach highlights */
+        section[data-testid="stSidebar"] {
+            background-color: var(--primary);
+        }
+        
+        section[data-testid="stSidebar"] * {
+            color: white;
+        }
+        
+        section[data-testid="stSidebar"] a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hide sidebar by default since navigation is at top */
         section[data-testid="stSidebar"] {
             display: none;
         }
