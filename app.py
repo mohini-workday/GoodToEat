@@ -466,28 +466,10 @@ st.markdown("""
         margin-top: 0 !important;
     }
     
-    /* Remove top margin from logo container and move logo 90% up */
-    div[data-testid="column"]:has(img),
-    div[data-testid="column"]:has([data-testid="stImage"]) {
-        margin-top: -90% !important;
+    /* Remove top margin from logo container */
+    div[data-testid="column"]:has(img) {
+        margin-top: 0 !important;
         padding-top: 0 !important;
-    }
-    
-    /* Move logo image container up */
-    div[data-testid="stImage"] {
-        margin-top: -90% !important;
-        padding-top: 0 !important;
-    }
-    
-    /* Target the first set of columns (logo columns) specifically */
-    div[data-testid="stHorizontalBlock"]:first-of-type {
-        margin-top: -90% !important;
-        padding-top: 0 !important;
-    }
-    
-    /* Alternative: Use absolute positioning to move logo to top */
-    div[data-testid="stHorizontalBlock"]:first-of-type div[data-testid="column"]:nth-child(2) {
-        margin-top: -90% !important;
     }
     
     /* Set full website background and default text color */
@@ -535,20 +517,11 @@ if 'current_page' not in st.session_state:
 pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
 
 
-# Display logo image centered at the top - double size and centered, moved 90% up
-st.markdown("""
-    <style>
-        /* Move logo container 90% up from current position */
-        div[data-testid="stHorizontalBlock"]:first-of-type {
-            margin-top: -200px !important;
-            padding-top: 0 !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
+# Display logo image centered at the top - double size and centered, minimal top spacing
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
     # Center the logo using columns for proper centering, double size (400px)
+    # Minimal top spacing
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.image(logo_img, use_container_width=False, width=400, output_format="PNG")
