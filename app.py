@@ -500,17 +500,18 @@ if 'current_page' not in st.session_state:
 pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
 
 
-# Display logo image centered at the top
-st.markdown("""
-""", unsafe_allow_html=True)
-
+# Display logo image centered at the top - double size and centered
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
-    # Center the logo - doubled size from 200 to 400
-    st.image(logo_img, use_container_width=False, width=400, class_name="logo-wrapper")
+    # Center the logo using columns for proper centering, double size (400px)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image(logo_img, use_container_width=False, width=400)
 else:
     # Fallback to text if image not found
-    st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
 st.markdown("""
           
