@@ -380,11 +380,20 @@ st.markdown("""
     }
     
     .logo-wrapper img {
-        max-height: 120px;
+        max-height: 400px;
         width: auto;
         height: auto;
         object-fit: contain;
         display: block;
+        margin: 0 auto !important;
+    }
+    
+    /* Center logo image in Streamlit */
+    div[data-testid="stImage"] img {
+        max-width: 400px !important;
+        width: 400px !important;
+        height: auto !important;
+        display: block !important;
         margin: 0 auto !important;
     }
     
@@ -393,6 +402,13 @@ st.markdown("""
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+    
+    /* Center logo image specifically */
+    div[data-testid="stImage"] img {
+        display: block !important;
         margin: 0 auto !important;
     }
     
@@ -485,13 +501,25 @@ pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Mom
 
 
 # Display logo image centered at the top
+st.markdown("""
+    <div class="top-nav">
+        <div class="nav-container">
+            <div class="logo-wrapper">
+""", unsafe_allow_html=True)
+
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
-    # Center the logo - Streamlit will place it in the wrapper div
-    st.image(logo_img, use_container_width=False, width=200)
+    # Center the logo - doubled size from 200 to 400
+    st.image(logo_img, use_container_width=False, width=400)
 else:
     # Fallback to text if image not found
     st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
+
+st.markdown("""
+            </div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
             </div>
