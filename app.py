@@ -17,20 +17,41 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap');
     
+    /* Centralized Color System */
+    :root {
+        --primary: #007C91;      /* Cobalt Teal */
+        --secondary: #F7ACB8;    /* Peach */
+        --accent: #B27A5E;      /* Bronze */
+        --bg: #FAF8F4;          /* Ivory */
+        --text: #2B2B2B;        /* Charcoal */
+        
+        /* Color Variations */
+        --primary-dark: #005A6B;
+        --primary-light: #009EB5;
+        --accent-dark: #8F5F47;
+        --accent-light: #D4A574;
+        --bg-light: #FFFFFF;
+        --bg-dark: #E8E5DC;
+        --text-light: #6B7A5F;
+        --text-muted: #999999;
+        --white: #FFFFFF;
+        --black: #000000;
+    }
+    
     .main {
         font-family: 'Lato', sans-serif;
     }
     
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Playfair Display', serif;
-        color: #2C3E2D;
+        color: var(--text);
     }
     
     .main-header {
         font-family: 'Playfair Display', serif;
         font-size: 3.5rem;
         font-weight: 700;
-        color: #D4A574;
+        color: var(--accent-light);
         text-align: center;
         padding: 2rem 0 1rem 0;
         margin-bottom: 0.5rem;
@@ -40,14 +61,14 @@ st.markdown("""
     .tagline {
         font-family: 'Lato', sans-serif;
         font-size: 1.2rem;
-        color: #6B7A5F;
+        color: var(--text-light);
         text-align: center;
         font-style: italic;
         margin-bottom: 2rem;
     }
     
     .hero-section {
-        background: linear-gradient(135deg, #F8F6F0 0%, #E8E5DC 100%);
+        background: linear-gradient(135deg, var(--bg) 0%, var(--bg-dark) 100%);
         padding: 4rem 2rem;
         border-radius: 15px;
         margin: 2rem 0;
@@ -57,7 +78,7 @@ st.markdown("""
     .hero-title {
         font-family: 'Playfair Display', serif;
         font-size: 3rem;
-        color: #2C3E2D;
+        color: var(--text);
         margin-bottom: 1rem;
         font-weight: 700;
     }
@@ -65,29 +86,29 @@ st.markdown("""
     .hero-subtitle {
         font-family: 'Lato', sans-serif;
         font-size: 1.3rem;
-        color: #6B7A5F;
+        color: var(--text-light);
         line-height: 1.8;
         max-width: 800px;
         margin: 0 auto;
     }
     
     .section-box {
-        background-color: #FFFFFF;
+        background-color: var(--bg-light);
         padding: 2.5rem;
         border-radius: 12px;
         margin: 2rem 0;
         box-shadow: 0 4px 6px rgba(0,0,0,0.08);
-        border-top: 4px solid #D4A574;
+        border-top: 4px solid var(--accent-light);
     }
     
     .feature-card {
-        background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 100%);
+        background: linear-gradient(135deg, var(--bg) 0%, var(--bg-light) 100%);
         padding: 2rem;
         border-radius: 10px;
         margin: 1rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         transition: transform 0.3s ease;
-        border-left: 3px solid #D4A574;
+        border-left: 3px solid var(--accent-light);
     }
     
     .feature-card:hover {
@@ -96,35 +117,35 @@ st.markdown("""
     }
     
     .product-card {
-        background-color: #FFFFFF;
+        background-color: var(--bg-light);
         padding: 2rem;
         border-radius: 12px;
         margin: 1.5rem 0;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        border: 1px solid #E8E5DC;
+        border: 1px solid var(--bg-dark);
     }
     
     .testimonial-box {
-        background: linear-gradient(135deg, #F8F6F0 0%, #E8E5DC 100%);
+        background: linear-gradient(135deg, var(--bg) 0%, var(--bg-dark) 100%);
         padding: 2rem;
         border-radius: 10px;
         margin: 1.5rem 0;
-        border-left: 5px solid #D4A574;
+        border-left: 5px solid var(--accent-light);
         font-style: italic;
     }
     
     .blog-card {
-        background-color: #FFFFFF;
+        background-color: var(--bg-light);
         padding: 1.5rem;
         border-radius: 10px;
         margin: 1rem 0;
         box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        border-top: 3px solid #D4A574;
+        border-top: 3px solid var(--accent-light);
     }
     
     .stButton>button {
-        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%);
-        color: white;
+        background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+        color: var(--white);
         border-radius: 25px;
         padding: 0.75rem 2.5rem;
         font-weight: 600;
@@ -134,9 +155,9 @@ st.markdown("""
     }
     
     .stButton>button:hover {
-        background: linear-gradient(135deg, #B8935F 0%, #9A7A4A 100%);
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(212, 165, 116, 0.4);
+        box-shadow: 0 4px 8px rgba(178, 122, 94, 0.4);
     }
     
     /* Navigation button styles - consistent sizing */
@@ -194,26 +215,26 @@ st.markdown("""
     
     /* Active navigation button */
     div[data-testid="column"] button[kind="primary"] {
-        background: linear-gradient(135deg, #D4A574 0%, #B8935F 100%) !important;
-        color: white !important;
+        background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%) !important;
+        color: var(--white) !important;
         font-weight: 600 !important;
     }
     
     /* Inactive navigation button */
     div[data-testid="column"] button[kind="secondary"] {
         background: transparent !important;
-        color: #2C3E2D !important;
-        border: 1px solid #E8E5DC !important;
+        color: var(--text) !important;
+        border: 1px solid var(--bg-dark) !important;
     }
     
     div[data-testid="column"] button[kind="secondary"]:hover {
-        background-color: #F8F6F0 !important;
-        border-color: #D4A574 !important;
-        color: #D4A574 !important;
+        background-color: var(--bg) !important;
+        border-color: var(--accent-light) !important;
+        color: var(--accent-light) !important;
     }
     
     .nav-link {
-        color: #2C3E2D;
+        color: var(--text);
         text-decoration: none;
         padding: 0.5rem 1rem;
         border-radius: 5px;
@@ -221,12 +242,12 @@ st.markdown("""
     }
     
     .nav-link:hover {
-        background-color: #F8F6F0;
+        background-color: var(--bg);
     }
     
     .footer {
-        background-color: #2C3E2D;
-        color: #F8F6F0;
+        background-color: var(--text);
+        color: var(--bg);
         padding: 2rem;
         text-align: center;
         margin-top: 4rem;
@@ -235,7 +256,7 @@ st.markdown("""
     
     .award-badge {
         background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-        color: #2C3E2D;
+        color: var(--text);
         padding: 0.5rem 1rem;
         border-radius: 20px;
         font-weight: 600;
@@ -244,13 +265,13 @@ st.markdown("""
     }
     
     .highlight-text {
-        color: #D4A574;
+        color: var(--accent-light);
         font-weight: 600;
     }
     
     /* Top Navigation Bar */
     .top-nav {
-        background-color: #FFFFFF;
+        background-color: var(--bg-light);
         padding: 1.5rem 0 1rem 0;
         margin: 0 0 1rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -388,7 +409,7 @@ if logo_img:
     st.image(logo_img, use_container_width=False, width=200)
 else:
     # Fallback to text if image not found
-    st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: #D4A574; text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
 st.markdown("""
             </div>
@@ -511,14 +532,14 @@ if page == "Home":
             st.markdown(f"""
             <div style="text-align: center; padding: 1rem;">
                 <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">{icon}</div>
-                <div style="font-weight: 600; color: #2C3E2D;">{use}</div>
+                <div style="font-weight: 600; color: var(--text);">{use}</div>
             </div>
             """, unsafe_allow_html=True)
 
 # Products Page
 elif page == "Products":
     st.markdown("### 🧈 Our Products")
-    st.markdown('<p style="text-align: center; color: #6B7A5F; font-size: 1.1rem;">Handcrafted in small batches, GoodToEat brings pure warmth and refined depth of flavor to your meals.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; color: var(--text-light); font-size: 1.1rem;">Handcrafted in small batches, GoodToEat brings pure warmth and refined depth of flavor to your meals.</p>', unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -742,27 +763,27 @@ elif page == "The Brand":
     st.markdown("""
     <div class="section-box">
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem;">
-        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+        <div style="text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 8px;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧪</div>
             <div style="font-weight: 600;">Laboratory Tested</div>
         </div>
-        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+        <div style="text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 8px;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏆</div>
             <div style="font-weight: 600;">Award Winning</div>
         </div>
-        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+        <div style="text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 8px;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">❤️</div>
             <div style="font-weight: 600;">Made With Love</div>
         </div>
-        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+        <div style="text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 8px;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
             <div style="font-weight: 600;">Certified Organic</div>
         </div>
-        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+        <div style="text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 8px;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">💚</div>
             <div style="font-weight: 600;">Gut Health Benefits</div>
         </div>
-        <div style="text-align: center; padding: 1.5rem; background: #F8F6F0; border-radius: 8px;">
+        <div style="text-align: center; padding: 1.5rem; background: var(--bg); border-radius: 8px;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">🫙</div>
             <div style="font-weight: 600;">Sterilised Glass Jars</div>
         </div>
@@ -847,7 +868,7 @@ elif page == "About Ghee":
 # Ghee Moments Page
 elif page == "Ghee Moments":
     st.markdown("### 📸 Ghee Moments")
-    st.markdown('<p style="text-align: center; color: #6B7A5F; font-size: 1.1rem;">Celebrating the joy of cooking with GoodToEat Ghee</p>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; color: var(--text-light); font-size: 1.1rem;">Celebrating the joy of cooking with GoodToEat Ghee</p>', unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -884,7 +905,7 @@ elif page == "Ghee Moments":
             <div class="testimonial-box">
             <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">{testimonial['rating']}</div>
             <p style="font-size: 1.05rem; margin-bottom: 1rem;">"{testimonial['text']}"</p>
-            <div style="font-weight: 600; color: #D4A574;">— {testimonial['name']}</div>
+            <div style="font-weight: 600; color: var(--accent-light);">— {testimonial['name']}</div>
             </div>
             """, unsafe_allow_html=True)
     
@@ -967,11 +988,11 @@ elif page == "Ghee Blogs":
         st.markdown(f"""
         <div class="blog-card">
         <h3>{blog['title']}</h3>
-        <p style="color: #6B7A5F; font-size: 0.9rem; margin-bottom: 1rem;">
-            <span style="color: #D4A574;">📅</span> {blog['date']} • <span style="color: #D4A574;">⏱️</span> {blog['read_time']}
+        <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">
+            <span style="color: var(--accent-light);">📅</span> {blog['date']} • <span style="color: var(--accent-light);">⏱️</span> {blog['read_time']}
         </p>
         <p style="line-height: 1.8; font-size: 1.05rem;">{blog['excerpt']}</p>
-        <button style="background: #D4A574; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 5px; margin-top: 1rem; cursor: pointer;">
+        <button style="background: var(--accent-light); color: var(--white); border: none; padding: 0.5rem 1.5rem; border-radius: 5px; margin-top: 1rem; cursor: pointer;">
             Read More →
         </button>
         </div>
@@ -980,7 +1001,7 @@ elif page == "Ghee Blogs":
 # Contacts Page
 elif page == "Contacts":
     st.markdown("### 📞 Contact Us")
-    st.markdown('<p style="text-align: center; color: #6B7A5F; font-size: 1.1rem;">We\'d love to hear from you! Get in touch anytime.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; color: var(--text-light); font-size: 1.1rem;">We\'d love to hear from you! Get in touch anytime.</p>', unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -996,7 +1017,7 @@ elif page == "Contacts":
         Ireland<br><br>
         
         <strong>📧 Email:</strong><br>
-        <a href="mailto:info@goodtoeat.ie" style="color: #D4A574;">info@goodtoeat.ie</a><br><br>
+        <a href="mailto:info@goodtoeat.ie" style="color: var(--accent-light);">info@goodtoeat.ie</a><br><br>
         
         <strong>📞 Phone:</strong><br>
         +353 (0) 1 XXX XXXX<br><br>
@@ -1015,12 +1036,12 @@ elif page == "Contacts":
             <div style="padding: 1rem; background: #F8F6F0; border-radius: 8px; text-align: center; flex: 1;">
                 <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📘</div>
                 <div style="font-weight: 600;">Facebook</div>
-                <div style="font-size: 0.9rem; color: #6B7A5F;">@GoodToEatIreland</div>
+                <div style="font-size: 0.9rem; color: var(--text-light);">@GoodToEatIreland</div>
             </div>
-            <div style="padding: 1rem; background: #F8F6F0; border-radius: 8px; text-align: center; flex: 1;">
+            <div style="padding: 1rem; background: var(--bg); border-radius: 8px; text-align: center; flex: 1;">
                 <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📷</div>
                 <div style="font-weight: 600;">Instagram</div>
-                <div style="font-size: 0.9rem; color: #6B7A5F;">@goodtoeat_ie</div>
+                <div style="font-size: 0.9rem; color: var(--text-light);">@goodtoeat_ie</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1133,9 +1154,9 @@ st.markdown("""
 <p style="margin: 0.5rem 0;">© 2024 GoodToEat. All rights reserved.</p>
 <p style="margin: 0.5rem 0;">Handcrafted in Ireland 🇮🇪 | Made with Love & Care</p>
 <p style="margin: 0.5rem 0; font-size: 0.9rem;">
-    <a href="#" style="color: #D4A574; margin: 0 1rem;">Privacy Policy</a> | 
-    <a href="#" style="color: #D4A574; margin: 0 1rem;">Terms of Service</a> | 
-    <a href="#" style="color: #D4A574; margin: 0 1rem;">Shipping Policy</a>
+    <a href="#" style="color: var(--accent-light); margin: 0 1rem;">Privacy Policy</a> | 
+    <a href="#" style="color: var(--accent-light); margin: 0 1rem;">Terms of Service</a> | 
+    <a href="#" style="color: var(--accent-light); margin: 0 1rem;">Shipping Policy</a>
 </p>
 </div>
 """, unsafe_allow_html=True)
