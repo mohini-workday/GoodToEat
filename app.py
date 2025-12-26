@@ -303,6 +303,27 @@ st.markdown("""
         font-weight: 600;
     }
     
+    /* Highlight sections with peach background */
+    .highlight {
+        background-color: var(--secondary);
+        padding: 1.2rem;
+        border-radius: 10px;
+        color: #2B2B2B;
+    }
+    
+    /* Bronze color for icons */
+    .icon,
+    [class*="icon"],
+    svg,
+    .emoji-icon {
+        color: var(--accent);
+    }
+    
+    /* Style emoji icons in content */
+    div:has(> div > div[style*="font-size: 2rem"]) {
+        color: var(--accent);
+    }
+    
     /* Top Navigation Bar */
     .top-nav {
         background-color: var(--bg-light);
