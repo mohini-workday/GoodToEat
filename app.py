@@ -150,21 +150,24 @@ st.markdown("""
         border-top: 3px solid var(--accent-light);
     }
     
-    .stButton>button {
-        background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
-        color: var(--white);
-        border-radius: 25px;
-        padding: 0.75rem 2.5rem;
-        font-weight: 600;
-        font-family: 'Lato', sans-serif;
+    /* CTA Buttons - Cobalt Teal with Peach hover and Bronze focus */
+    .stButton > button {
+        background-color: var(--primary);
+        color: white;
+        border-radius: 8px;
+        padding: 0.6em 1.2em;
         border: none;
+        font-weight: 600;
         transition: all 0.3s ease;
     }
     
-    .stButton>button:hover {
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(178, 122, 94, 0.4);
+    .stButton > button:hover {
+        background-color: var(--secondary);
+        color: #2B2B2B;
+    }
+    
+    .stButton > button:focus {
+        outline: 2px solid var(--accent);
     }
     
     /* Navigation button styles - consistent sizing */
@@ -1016,7 +1019,7 @@ elif page == "Ghee Blogs":
             <span style="color: var(--accent-light);">📅</span> {blog['date']} • <span style="color: var(--accent-light);">⏱️</span> {blog['read_time']}
         </p>
         <p style="line-height: 1.8; font-size: 1.05rem;">{blog['excerpt']}</p>
-        <button style="background: var(--accent-light); color: var(--white); border: none; padding: 0.5rem 1.5rem; border-radius: 5px; margin-top: 1rem; cursor: pointer;">
+        <button style="background-color: var(--primary); color: white; border: none; padding: 0.6em 1.2em; border-radius: 8px; margin-top: 1rem; cursor: pointer; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--secondary)'; this.style.color='#2B2B2B';" onmouseout="this.style.backgroundColor='var(--primary)'; this.style.color='white';" onfocus="this.style.outline='2px solid var(--accent)';" onblur="this.style.outline='none';">
             Read More →
         </button>
         </div>
