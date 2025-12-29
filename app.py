@@ -399,21 +399,25 @@ st.markdown("""
         height: auto;
     }
     
-    /* Make logo button invisible but clickable */
+    /* Style logo button to be minimal and clickable */
     .nav-logo button {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: transparent;
-        border: none;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: auto !important;
         cursor: pointer;
-        z-index: 10;
     }
     
     .nav-logo button:hover {
-        background: transparent;
+        background: transparent !important;
+        transform: none;
+    }
+    
+    /* Make the logo area itself clickable */
+    .nav-logo {
+        cursor: pointer;
     }
     
     /* Logo styling - centered for all screen sizes */
@@ -591,18 +595,18 @@ for page_name in left_pages:
 # Center logo (clickable, goes to About Ghee)
 st.markdown("""
             </div>
-            <div class="nav-logo" style="position: relative;">
+            <div class="nav-logo">
 """, unsafe_allow_html=True)
 
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
-    # Create a column for the logo with clickable overlay
+    # Create clickable logo using columns
     logo_col1, logo_col2, logo_col3 = st.columns([1, 1, 1])
     with logo_col2:
         # Display logo
         st.image(logo_img, use_container_width=False, width=200, output_format="PNG")
-        # Invisible button overlay for clicking
-        if st.button("", key="logo_button", help="Go to About Ghee", use_container_width=True):
+        # Clickable button below logo (styled to be part of logo area)
+        if st.button("", key="logo_button", help="Go to About Ghee", use_container_width=False):
             st.session_state.current_page = "About Ghee"
             st.rerun()
 else:
