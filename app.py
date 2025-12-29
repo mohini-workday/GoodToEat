@@ -208,7 +208,11 @@ st.markdown("""
         max-width: none !important;
         width: auto !important;
     }
-    
+       
+    div[data-testid="stHorizontalBlock"]:first-of-type {
+       margin-top: -100px !important;
+       padding-top: 0 !important;
+   }
     div[data-testid="column"] {
         width: 100% !important;
         min-width: 0 !important;
@@ -340,10 +344,10 @@ st.markdown("""
         color: var(--accent);
     }
     
-    /* Top Navigation Bar */
+    /* Top Navigation Bar - Logo centered with buttons on left and right */
     .top-nav {
         background-color: var(--bg-light);
-        padding: 1.5rem 0 1rem 0;
+        padding: 1rem 0;
         margin: 0 0 1rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         position: sticky;
@@ -352,12 +356,64 @@ st.markdown("""
     }
     
     .nav-container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         padding: 0 2rem;
+        gap: 2rem;
+    }
+    
+    .nav-left, .nav-right {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex: 1;
+    }
+    
+    .nav-left {
+        justify-content: flex-end;
+    }
+    
+    .nav-right {
+        justify-content: flex-start;
+    }
+    
+    .nav-logo {
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .nav-logo:hover {
+        transform: scale(1.05);
+    }
+    
+    .nav-logo img {
+        max-height: 80px;
+        width: auto;
+        height: auto;
+    }
+    
+    /* Make logo button invisible but clickable */
+    .nav-logo button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 10;
+    }
+    
+    .nav-logo button:hover {
+        background: transparent;
     }
     
     /* Logo styling - centered for all screen sizes */
@@ -513,36 +569,68 @@ st.set_page_config(
 if 'current_page' not in st.session_state:
     st.session_state.current_page = "Home"
 
-# Navigation pages
-pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
+# Navigation pages - split into left and right groups
+left_pages = ["Home", "Products", "The Founder", "The Brand"]
+right_pages = ["Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
+all_pages = left_pages + ["About Ghee"] + right_pages
 
+# Create navigation bar with logo in center
+st.markdown("""
+    <div class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+""", unsafe_allow_html=True)
 
-# Display logo image centered at the top - double size and centered, minimal top spacing
+# Left navigation buttons
+for page_name in left_pages:
+    button_type = "primary" if st.session_state.current_page == page_name else "secondary"
+    if st.button(page_name, key=f"nav_left_{page_name}", type=button_type):
+        st.session_state.current_page = page_name
+        st.rerun()
+
+# Center logo (clickable, goes to About Ghee)
+st.markdown("""
+            </div>
+            <div class="nav-logo" style="position: relative;">
+""", unsafe_allow_html=True)
+
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
-    # Center the logo using columns for proper centering, double size (400px)
-    # Minimal top spacing
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.image(logo_img, use_container_width=False, width=400, output_format="PNG")
+    # Create a column for the logo with clickable overlay
+    logo_col1, logo_col2, logo_col3 = st.columns([1, 1, 1])
+    with logo_col2:
+        # Display logo
+        st.image(logo_img, use_container_width=False, width=200, output_format="PNG")
+        # Invisible button overlay for clicking
+        if st.button("", key="logo_button", help="Go to About Ghee", use_container_width=True):
+            st.session_state.current_page = "About Ghee"
+            st.rerun()
 else:
     # Fallback to text if image not found
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-light); text-align: center; margin-bottom: 1rem;">🧈 GoodToEat</div>', unsafe_allow_html=True)
-
-
-
-# Navigation buttons in a row - all same size with consistent spacing
-st.markdown('<div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">', unsafe_allow_html=True)
-nav_cols = st.columns(len(pages), gap="small")
-for i, page_name in enumerate(pages):
-    with nav_cols[i]:
-        button_type = "primary" if st.session_state.current_page == page_name else "secondary"
-        if st.button(page_name, key=f"nav_{page_name}", use_container_width=True, type=button_type):
-            st.session_state.current_page = page_name
+    logo_col1, logo_col2, logo_col3 = st.columns([1, 1, 1])
+    with logo_col2:
+        if st.button("GoodToEat", key="logo_text_button", help="Go to About Ghee", use_container_width=True):
+            st.session_state.current_page = "About Ghee"
             st.rerun()
-st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-light); text-align: center;">🧈 GoodToEat</div>', unsafe_allow_html=True)
+
+# Right navigation buttons
+st.markdown("""
+            </div>
+            <div class="nav-right">
+""", unsafe_allow_html=True)
+
+for page_name in right_pages:
+    button_type = "primary" if st.session_state.current_page == page_name else "secondary"
+    if st.button(page_name, key=f"nav_right_{page_name}", type=button_type):
+        st.session_state.current_page = page_name
+        st.rerun()
+
+st.markdown("""
+            </div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
 # Get current page
 page = st.session_state.current_page
