@@ -200,36 +200,15 @@ st.markdown("""
         outline: 2px solid var(--accent);
     }
     
-    /* Navigation button styles - consistent sizing */
-    /* Force equal column widths */
-    div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
+    /* Navigation button styles - horizontal layout */
+    .nav-buttons button {
+        min-width: auto !important;
         max-width: none !important;
-        width: auto !important;
-    }
-       
-    div[data-testid="stHorizontalBlock"]:first-of-type {
-       margin-top: -100px !important;
-       padding-top: 0 !important;
-   }
-    div[data-testid="column"] {
-        width: 100% !important;
-        min-width: 0 !important;
-        flex: 1 1 0% !important;
-        padding: 0 0.25rem !important;
-        max-width: 100% !important;
-    }
-    
-    div[data-testid="column"] button {
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        height: 50px !important;
-        min-height: 50px !important;
-        max-height: 50px !important;
-        font-size: 0.75rem !important;
-        padding: 0.4rem 0.2rem !important;
+        height: 45px !important;
+        min-height: 45px !important;
+        max-height: 45px !important;
+        font-size: 0.9rem !important;
+        padding: 0.5rem 1rem !important;
         margin: 0 !important;
         border-radius: 5px;
         font-weight: 500;
@@ -238,40 +217,34 @@ st.markdown("""
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        line-height: 1.15 !important;
+        white-space: nowrap !important;
         box-sizing: border-box !important;
-        overflow-wrap: break-word !important;
     }
     
-    /* Ensure button text wraps properly for long names */
-    div[data-testid="column"] button p {
+    /* Ensure button text doesn't wrap */
+    .nav-buttons button p {
         margin: 0 !important;
         padding: 0 !important;
-        font-size: 0.75rem !important;
-        line-height: 1.15 !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
+        font-size: 0.9rem !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
     }
     
     /* Active navigation button */
-    div[data-testid="column"] button[kind="primary"] {
+    .nav-buttons button[kind="primary"] {
         background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%) !important;
         color: var(--white) !important;
         font-weight: 600 !important;
     }
     
     /* Inactive navigation button */
-    div[data-testid="column"] button[kind="secondary"] {
+    .nav-buttons button[kind="secondary"] {
         background: transparent !important;
         color: var(--text) !important;
         border: 1px solid var(--bg-dark) !important;
     }
     
-    div[data-testid="column"] button[kind="secondary"]:hover {
+    .nav-buttons button[kind="secondary"]:hover {
         background-color: var(--bg) !important;
         border-color: var(--accent-light) !important;
         color: var(--accent-light) !important;
@@ -344,7 +317,7 @@ st.markdown("""
         color: var(--accent);
     }
     
-    /* Top Navigation Bar - Logo centered with buttons on left and right */
+    /* Top Navigation Bar - Landscape with logo on left */
     .top-nav {
         background-color: var(--bg-light);
         padding: 1rem 0;
@@ -365,27 +338,12 @@ st.markdown("""
         gap: 2rem;
     }
     
-    .nav-left, .nav-right {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        flex: 1;
-    }
-    
-    .nav-left {
-        justify-content: flex-end;
-    }
-    
-    .nav-right {
-        justify-content: flex-start;
-    }
-    
     .nav-logo {
         flex-shrink: 0;
         cursor: pointer;
         transition: transform 0.3s ease;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
     
@@ -397,6 +355,24 @@ st.markdown("""
         max-height: 80px;
         width: auto;
         height: auto;
+        display: block;
+        margin: 0 !important;
+    }
+    
+    /* Ensure logo image in nav doesn't get centered by other styles */
+    .nav-logo div[data-testid="stImage"] {
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        margin: 0 !important;
+        width: auto !important;
+    }
+    
+    .nav-logo div[data-testid="stImage"] img {
+        display: block !important;
+        margin: 0 !important;
+        width: auto !important;
+        max-width: 150px !important;
     }
     
     /* Style logo button to be minimal and clickable */
@@ -405,7 +381,7 @@ st.markdown("""
         border: none !important;
         padding: 0 !important;
         margin: 0 !important;
-        width: 100% !important;
+        width: auto !important;
         height: auto !important;
         cursor: pointer;
     }
@@ -415,9 +391,14 @@ st.markdown("""
         transform: none;
     }
     
-    /* Make the logo area itself clickable */
-    .nav-logo {
-        cursor: pointer;
+    /* Navigation buttons container - horizontal layout */
+    .nav-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        flex: 1;
     }
     
     /* Logo styling - centered for all screen sizes */
@@ -448,8 +429,9 @@ st.markdown("""
         margin: 0 auto !important;
     }
     
-    /* Center logo image in Streamlit */
-    div[data-testid="stImage"] img {
+    /* Center logo image in Streamlit (only for main content, not nav) */
+    .logo-wrapper div[data-testid="stImage"] img,
+    .main-content div[data-testid="stImage"] img {
         max-width: 400px !important;
         width: 400px !important;
         height: auto !important;
@@ -457,19 +439,14 @@ st.markdown("""
         margin: 0 auto !important;
     }
     
-    /* Ensure logo container is centered */
-    div[data-testid="stImage"] {
+    /* Ensure logo container is centered (only for main content) */
+    .logo-wrapper div[data-testid="stImage"],
+    .main-content div[data-testid="stImage"] {
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
         margin: 0 auto !important;
         width: 100% !important;
-    }
-    
-    /* Center logo image specifically */
-    div[data-testid="stImage"] img {
-        display: block !important;
-        margin: 0 auto !important;
     }
     
     .nav-links {
@@ -573,60 +550,42 @@ st.set_page_config(
 if 'current_page' not in st.session_state:
     st.session_state.current_page = "Home"
 
-# Navigation pages - split into left and right groups
-left_pages = ["Home", "Products", "The Founder", "The Brand"]
-right_pages = ["Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
-all_pages = left_pages + ["About Ghee"] + right_pages
+# Navigation pages - all in one list for horizontal layout
+all_pages = ["Home", "Products", "The Founder", "The Brand", "About Ghee", "Ghee Moments", "Ghee Blogs", "Contacts", "FAQs"]
 
-# Create navigation bar with logo in center
+# Create navigation bar with logo on left
 st.markdown("""
     <div class="top-nav">
         <div class="nav-container">
-            <div class="nav-left">
-""", unsafe_allow_html=True)
-
-# Left navigation buttons
-for page_name in left_pages:
-    button_type = "primary" if st.session_state.current_page == page_name else "secondary"
-    if st.button(page_name, key=f"nav_left_{page_name}", type=button_type):
-        st.session_state.current_page = page_name
-        st.rerun()
-
-# Center logo (clickable, goes to About Ghee)
-st.markdown("""
-            </div>
             <div class="nav-logo">
 """, unsafe_allow_html=True)
 
+# Logo on the left (clickable, goes to About Ghee)
 logo_img = load_image("Images/Logo G2E-01.png")
 if logo_img:
-    # Create clickable logo using columns
-    logo_col1, logo_col2, logo_col3 = st.columns([1, 1, 1])
-    with logo_col2:
-        # Display logo
-        st.image(logo_img, use_container_width=False, width=200, output_format="PNG")
-        # Clickable button below logo (styled to be part of logo area)
-        if st.button("", key="logo_button", help="Go to About Ghee", use_container_width=False):
-            st.session_state.current_page = "About Ghee"
-            st.rerun()
+    # Display logo
+    st.image(logo_img, use_container_width=False, width=150, output_format="PNG")
+    # Clickable button below logo (styled to be part of logo area)
+    if st.button("", key="logo_button", help="Go to About Ghee", use_container_width=False):
+        st.session_state.current_page = "About Ghee"
+        st.rerun()
 else:
     # Fallback to text if image not found
-    logo_col1, logo_col2, logo_col3 = st.columns([1, 1, 1])
-    with logo_col2:
-        if st.button("GoodToEat", key="logo_text_button", help="Go to About Ghee", use_container_width=True):
-            st.session_state.current_page = "About Ghee"
-            st.rerun()
-        st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-light); text-align: center;">🧈 GoodToEat</div>', unsafe_allow_html=True)
+    if st.button("GoodToEat", key="logo_text_button", help="Go to About Ghee", use_container_width=False):
+        st.session_state.current_page = "About Ghee"
+        st.rerun()
+    st.markdown('<div style="font-family: \'Playfair Display\', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-light);">🧈 GoodToEat</div>', unsafe_allow_html=True)
 
-# Right navigation buttons
+# Navigation buttons on the right
 st.markdown("""
             </div>
-            <div class="nav-right">
+            <div class="nav-buttons">
 """, unsafe_allow_html=True)
 
-for page_name in right_pages:
+# Create all navigation buttons in a horizontal row
+for page_name in all_pages:
     button_type = "primary" if st.session_state.current_page == page_name else "secondary"
-    if st.button(page_name, key=f"nav_right_{page_name}", type=button_type):
+    if st.button(page_name, key=f"nav_{page_name}", type=button_type):
         st.session_state.current_page = page_name
         st.rerun()
 
